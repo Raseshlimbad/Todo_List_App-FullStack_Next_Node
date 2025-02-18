@@ -14,24 +14,21 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  username  String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  todos     Todo[]
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+  todos    Todo[]
 
   @@map("users")
 }
 
 model Todo {
-  id        String   @id @default(uuid())
-  title     String
-  status    Boolean  @default(false)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+  completed   Boolean @default(false)
+  userId      String
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade) // user who created this todo
 
   @@map("todos")
 }
